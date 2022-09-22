@@ -1,27 +1,31 @@
+let maximoTamanio=500;
 let puntos = 0;
 let tiempo = 30;
 let Ttiempo = undefined;
 let player = document.getElementById("player");//agarro el elemento player
 player.addEventListener("click",sumarPuntos);//escucho caundo lo toca el cursor
-player.addEventListener("pointerhover",sumarPuntos);
+player.addEventListener("mouseover",sumarPuntos);
 let contenedor = document.querySelectorAll('div.contenedor');
 let puntaje = document.getElementById("puntos");
 let cronometro = document.getElementById("tiempo")
 window.addEventListener('load',setContentSize);
 window.addEventListener('resize',setContentSize);
-let contentSize;
+let contentSize=10;
 
 function setContentSize()//cambiar tamaño de contenedores 
 {
   if(window.innerHeight>window.innerWidth)
   {
-    contentSize = window.innerWidth*0.89;
-  }else contentSize = window.innerHeight*0.89;
-  contentSize = contentSize.toFixed(2);
-  contenedor[0].style.width = contentSize+"px";
+    contentSize = (window.innerWidth*0.89).toFixed(0);
+  }else contentSize = (window.innerHeight*0.89).toFixed(0);
+  if(contentSize>maximoTamanio)contentSize=maximoTamanio;//si el contensize es mayor al tamaño maximo fijo
+
+  contenedor[0].style.width = contentSize+"px";//contenedor del tiempo y puntaje
   contenedor[0].style.height = 30+"px";
-  contenedor[1].style.width = contentSize+"px";
+  contenedor[1].style.width = contentSize+"px";//contenedor del juego
   contenedor[1].style.height = contentSize+"px";
+  player.style.marginTop = 0 + "px";//lo muevo en eje y
+  player.style.marginLeft = 0 + "px";//lo muevo en eje x
 }
 
 function sumarPuntos() {//cada vez que el player es tocado
@@ -43,7 +47,7 @@ function restarTiempo() {
 function start(){Ttiempo = setInterval(restarTiempo,1000);}
 
 function ganaste(){//llega a 70 puntos
-		alert(`ganaste. Tiempo: ${Tiempo}`);
+		alert(`ganaste. Tiempo: ${tiempo}s`);
 		reiniciarJuego();
 }
 function  perdiste() {//el tiempo llega a 0
